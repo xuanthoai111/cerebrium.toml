@@ -1,0 +1,14 @@
+[project]
+name = "lscpu-info"
+entrypoint = "app.py"
+python_version = "3.10"
+
+[dependencies]
+packages = [
+    "fastapi",
+    "uvicorn"
+]
+
+[deployment]
+cpu = 1
+memory = "1Gi"
