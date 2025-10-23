@@ -4,10 +4,17 @@ from fastapi import FastAPI
 app = FastAPI()
 
 @app.get("/")
-def read_root():
+def root():
+    return {"message": "Server is running"}
+
+@app.post("/predict")
+def run_lscpu():
     try:
-        # Chạy lệnh lscpu và lấy output
         result = subprocess.run(["lscpu"], capture_output=True, text=True, check=True)
-        return {"cpu_info": result.stdout}
+        print("===== CPU INFO START =====")
+        print(result.stdout)   # 👈 cái này sẽ hiện trong Cerebrium logs
+        print("===== CPU INFO END =====")
+        return {"output": result.stdout}
     except subprocess.CalledProcessError as e:
+        print("Error running lscpu:", e.stderr)
         return {"error": e.stderr}
